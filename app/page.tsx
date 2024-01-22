@@ -1,5 +1,8 @@
+import { Suspense } from "react";
+import { EmployeesTable, TableSkeleton } from "./ui/table";
+
 export default function Page() {
-    return (
-        <p className="text-red-500">home</p>
+    return (    
+        <Suspense fallback={<TableSkeleton/>}><EmployeesTable/></Suspense>
     );
 }
