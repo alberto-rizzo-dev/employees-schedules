@@ -1,8 +1,28 @@
 import { Suspense } from "react";
 import { EmployeesTable, TableSkeleton } from "./ui/table";
+import Search from "./ui/search";
+import { fetchTablePages } from "./lib/db-connection";
+import TablePagesIndex from "./ui/table-pages-index";
 
-export default function Page() {
+export default async function Page({
+    searchParams,
+  }: {
+    searchParams?: {
+      query?: string;
+      page?: string;
+    };
+  }) {
+    const query = searchParams?.query || '';
+    const page = Number(searchParams?.page) || 1;
+    const totalPages = await fetchTablePages(query);
+
     return (    
-        <Suspense fallback={<TableSkeleton/>}><EmployeesTable/></Suspense>
+        <div className="p-10 flex-column justify-center items-center">
+            <div className="pb-3"><Search placeholder="Cerca turni..." /></div>
+            <Suspense key={query + page} fallback={<TableSkeleton/>}>
+                <EmployeesTable query={query} currentPage={page}/>
+            </Suspense>
+            <div className="pt-3"><TablePagesIndex totalPages={totalPages} /></div>
+        </div>
     );
 }

@@ -21,6 +21,11 @@ const links = [
     href: '/add-employee',
     icon: UserPlusIcon,
   },
+  {
+    name: 'Insert Workshift',
+    href: '/insert-workshift',
+    icon: UserPlusIcon,
+  },
 ];
 
 export default function NavLinks() {
