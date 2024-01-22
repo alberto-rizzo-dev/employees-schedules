@@ -1,23 +1,23 @@
 export type Employee = {
-    id: string;
+    id: number;
     name: string;
     surname: string;
     role: 'impiegato' | 'operaio' | 'capo reparto' | 'dirigente' | 'amministratore';
   };
   
   export type WorkShift = {
-    id: string;
-    employee: Employee;
-    start_date: Date;
-    end_date: Date;
+    id: number;
+    employee: number;
+    start_timestamp: Date;
+    end_timestamp: Date;
   };
 
   export type WorkShiftTable = {
-    employee_id: string;
+    employee_id: number;
     name: string;
     surname: string;
     role: 'impiegato' | 'operaio' | 'capo reparto' | 'dirigente' | 'amministratore';
-    workshift_id: string;
-    start_date: Date;
-    end_date: Date;
+    workshift_id: number;
+    start_timestamp: Date;
+    end_timestamp: Date;
   }

@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import {
     UserPlusIcon,
     TableCellsIcon,
+    DocumentPlusIcon
   } from '@heroicons/react/24/outline';
 
 // Map of links to display in the NavBar.
@@ -24,7 +25,7 @@ const links = [
   {
     name: 'Insert Workshift',
     href: '/insert-workshift',
-    icon: UserPlusIcon,
+    icon: DocumentPlusIcon,
   },
 ];
 

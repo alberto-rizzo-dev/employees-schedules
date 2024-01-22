@@ -19,16 +19,16 @@ export async function fetchTableData(query:string,currentPage:number) {
             employee.surname,
             employee.role,
             workshift.id as workshift_id,
-            workshift.start_date,
-            workshift.end_date
+            workshift.start_timestamp,
+            workshift.end_timestamp
         FROM employee, workshift
         WHERE employee.id = workshift.employee
         AND (
             employee.name ILIKE ${`%${query}%`} OR
             employee.surname ILIKE ${`%${query}%`} OR
             employee.role ILIKE ${`%${query}%`} OR
-            workshift.start_date::text ILIKE ${`%${query}%`} OR
-            workshift.start_date::text ILIKE ${`%${query}%`}
+            workshift.start_timestamp::text ILIKE ${`%${query}%`} OR
+            workshift.start_timestamp::text ILIKE ${`%${query}%`}
         )
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
@@ -50,8 +50,8 @@ export async function fetchTablePages(query:string,){
                 employee.name ILIKE ${`%${query}%`} OR
                 employee.surname ILIKE ${`%${query}%`} OR
                 employee.role ILIKE ${`%${query}%`} OR
-                workshift.start_date::text ILIKE ${`%${query}%`} OR
-                workshift.start_date::text ILIKE ${`%${query}%`}
+                workshift.start_timestamp::text ILIKE ${`%${query}%`} OR
+                workshift.start_timestamp::text ILIKE ${`%${query}%`}
             )
         `;
         return Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);

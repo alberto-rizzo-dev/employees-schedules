@@ -51,10 +51,10 @@ export async function EmployeesTable({
                 {row.role}
             </td>
             <td className="p-3">
-                {row.start_date.toDateString()}
+                {row.start_timestamp.toDateString()}
             </td>
             <td className="p-3 hidden lg:table-cell">
-                {row.end_date.toDateString()}
+                {row.end_timestamp.toDateString()}
             </td>
             <td className="p-3 hidden lg:table-cell">
                 {"xxx"}
