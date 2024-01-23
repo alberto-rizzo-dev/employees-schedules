@@ -18,7 +18,7 @@ export default async function Page({
 
     return (    
         <div className="md:p-10 p-2 flex-column justify-center items-center">
-            <div className="pb-3"><Search placeholder="Cerca turni..." /></div>
+            <div className="pb-3"><Search placeholder="Search workshifts..." /></div>
             <Suspense key={query + page} fallback={<TableSkeleton/>}>
                 <EmployeesTable query={query} currentPage={page}/>
             </Suspense>

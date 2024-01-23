@@ -17,22 +17,22 @@ export async function EmployeesTable({
         <thead className="rounded-lg text-left text-sm font-normal">
         <tr className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
             <th scope="col" className="p-4 font-medium">
-                Nome
+                Name
             </th>
             <th scope="col" className="p-4 font-medium">
-                Cognome
+                Surname
             </th>
             <th scope="col" className="p-4 font-medium hidden lg:table-cell">
-                Ruolo
+                Role
             </th>
             <th scope="col" className="p-4 font-medium">
-                Inizio Turno
+                Start At
             </th>
             <th scope="col" className="p-4 font-medium hidden lg:table-cell">
-                Fine Turno
+                End At
             </th>
             <th scope="col" className="p-4 font-medium hidden lg:table-cell">
-                Durata turno
+                Duratation
             </th>
             <th scope="col" className="p-4"/>
             <th scope="col" className="p-4"/>

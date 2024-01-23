@@ -3,7 +3,7 @@ import { z } from 'zod'; //for type validation
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache'; //for revalidate table data
 import { redirect } from 'next/navigation';
-import { atLeastQuarter, dateOrderOk, durationShiftOk } from './utils';
+import { atLeastQuarter, dateOrderOk, dateToString, durationShiftOk, isFutureDate } from './utils';
 
 const FormSchemaShift = z.object({
     employeeId: z.coerce.number(),
@@ -23,11 +23,24 @@ const FormSchemaEditShift = z.object({
 });
 
 export async function insertWorkshift(formData: FormData) {
+    try{
+        z.string().datetime().parse(formData.get('start'));
+    }catch(err){
+        throw new Error('Start timestamp is not valid.');
+    }
+    try{
+        z.string().datetime().parse(formData.get('end'));
+    }catch(err){
+        throw new Error('end timestamp is not valid.');
+    }
     const { employeeId, start_timestamp, end_timestamp } = FormSchemaShift.parse({
-      employeeId: formData.get('employeeId'),
-      start_timestamp: formData.get('start'),
-      end_timestamp: formData.get('end'),
+        employeeId: formData.get('employeeId'),
+        start_timestamp: formData.get('start'),
+        end_timestamp: formData.get('end'),
     });
+
+    if(isFutureDate(start_timestamp) || isFutureDate(end_timestamp))
+        throw new Error('Cannot insert future dates.');
 
     if(!(dateOrderOk(start_timestamp,end_timestamp)))
         throw new Error('Start timestamp must be before end timestamp.');
@@ -38,8 +51,8 @@ export async function insertWorkshift(formData: FormData) {
     if(!atLeastQuarter(start_timestamp,end_timestamp))
         throw new Error('At least 15 minutes of workshift are required.');
 
-    const start =start_timestamp.toISOString();
-    const end =end_timestamp.toISOString();
+    const start =dateToString(start_timestamp);
+    const end =dateToString(end_timestamp);
 
     try{
         await sql`
@@ -62,10 +75,26 @@ export async function deleteWorkShift(id: number) {
 }
 
 export async function updateWorkShift(id: number,formData: FormData, ) {
+
+    try{
+        const valid_date = z.string().datetime().parse(formData.get('start'));
+    }catch(err){
+        throw new Error('Start timestamp is not valid.');
+    }
+    try{
+        const valid_date = z.string().datetime().parse(formData.get('end'));
+
+    }catch(err){
+        throw new Error('end timestamp is not valid.');
+    }
+
     const { start, end } = FormSchemaEditShift.parse({
         start: formData.get('start'),
         end: formData.get('end'),
       });
+
+      if(isFutureDate(start) || isFutureDate(end))
+        throw new Error('Cannot insert future dates.');
 
       if(!(dateOrderOk(start,end)))
         throw new Error('Start timestamp must be before end timestamp.');
@@ -76,8 +105,8 @@ export async function updateWorkShift(id: number,formData: FormData, ) {
       if(!atLeastQuarter(start,end))
         throw new Error('At least 15 minutes of workshift are required.');
 
-      const s =start.toISOString();
-      const e =end.toISOString();
+      const s =dateToString(start);
+      const e =dateToString(end);
           
       try{
         await sql`
@@ -98,6 +127,8 @@ export async function insertEmployee(formData: FormData) {
       surname: formData.get('surname'),
       role: formData.get('role'),
     });
+    if(!(/^[A-Za-z\s]*$/.test(name)) || !(/^[A-Za-z\s]*$/.test(surname)))
+        throw new Error('Name and surname must contain only letters.');
     try{
         await sql`
         INSERT INTO employee (name, surname, role)

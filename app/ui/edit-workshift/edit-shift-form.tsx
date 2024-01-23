@@ -4,6 +4,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { updateWorkShift } from '@/app/lib/actions';
 import { Button } from '../submit-button';
+import { dateToString } from '@/app/lib/utils';
 
 export default function Form({
     shift,
@@ -30,7 +31,7 @@ export default function Form({
                 id="start"
                 name="start"
                 placeholder="ex. 2023-10-31 10:00"
-                defaultValue={shift.start_timestamp.toISOString().split('T')[0]}
+                defaultValue={dateToString(shift.start_timestamp)}
                 className="peer block w-full rounded-md  border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -49,7 +50,7 @@ export default function Form({
                 id="end"
                 name="end"
                 placeholder="ex. 2023-10-31 10:00"
-                defaultValue={shift.end_timestamp.toISOString().split('T')[0]}
+                defaultValue={dateToString(shift.end_timestamp)}
                 className="peer block w-full rounded-md  border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />

@@ -1,8 +1,8 @@
 export const dateToString = (date: Date) => {
+  
   const hours = date.getHours() <10 ? "0"+date.getHours() : date.getHours();
   const min = date.getMinutes() <10 ? "0"+date.getMinutes() : date.getMinutes();
-
-  return date.toDateString() + " " + hours + ":" + min;
+  return date.toDateString()+ " " + hours + ":" + min;
 }
 
 export const shiftDuration = (start: Date, end: Date) => {
@@ -35,6 +35,10 @@ export const atLeastQuarter = (start: Date, end: Date) => {
   return mins >= 15;
 }
 
+export const isFutureDate = (date: Date) => {
+  var d = new Date();
+  return date.valueOf() > d.valueOf();
+}
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
     // If the total number of pages is 7 or less,
