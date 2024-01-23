@@ -26,6 +26,7 @@ export default function Form({
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                required
                 id="start"
                 name="start"
                 placeholder="ex. 2023-10-31 10:00"
@@ -44,6 +45,7 @@ export default function Form({
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                required
                 id="end"
                 name="end"
                 placeholder="ex. 2023-10-31 10:00"
@@ -55,7 +57,7 @@ export default function Form({
           </div>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="my-6">
         <Button type="submit">Update Workshift</Button>
       </div>
     </form>

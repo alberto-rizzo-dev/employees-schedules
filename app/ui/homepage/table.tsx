@@ -78,6 +78,6 @@ export async function EmployeesTable({
 
 export function TableSkeleton() {
     return (
-        <div className="display flex justify-center items-center w-full"><div className="w-full h-64 bg-gray-100 rounded-lg"/></div>
+        <div className="display flex justify-center items-center w-full"><div className="w-full h-72 bg-gray-100 rounded-lg"/></div>
     );
 }

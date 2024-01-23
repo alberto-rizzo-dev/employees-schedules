@@ -3,7 +3,7 @@ import { z } from 'zod'; //for type validation
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache'; //for revalidate table data
 import { redirect } from 'next/navigation';
-import { WorkShift } from './definitions';
+import { atLeastQuarter, dateOrderOk, durationShiftOk } from './utils';
 
 const FormSchemaShift = z.object({
     employeeId: z.coerce.number(),
@@ -28,27 +28,37 @@ export async function insertWorkshift(formData: FormData) {
       start_timestamp: formData.get('start'),
       end_timestamp: formData.get('end'),
     });
-    const start =start_timestamp.toISOString().replace('T',' ');
-    const end =end_timestamp.toISOString().replace('T',' ');
+
+    if(!(dateOrderOk(start_timestamp,end_timestamp)))
+        throw new Error('Start timestamp must be before end timestamp.');
+
+    if(!(durationShiftOk(start_timestamp,end_timestamp)))
+        throw new Error('Workshift must be less than 10 hours.');
+
+    if(!atLeastQuarter(start_timestamp,end_timestamp))
+        throw new Error('At least 15 minutes of workshift are required.');
+
+    const start =start_timestamp.toISOString();
+    const end =end_timestamp.toISOString();
 
     try{
         await sql`
         INSERT INTO workshift (employee, start_timestamp, end_timestamp)
         VALUES (${employeeId},${start},${end})
         `;
-        revalidatePath('/');
-        redirect('/');
     }catch(err){
         throw new Error('Failed to insert workshift.');
     }
+    revalidatePath('/');
+    redirect('/');
 }
 
 export async function deleteWorkShift(id: number) {
     try{ 
         await sql`DELETE FROM workshift WHERE id = ${id}`;     
-        revalidatePath('/');
     }
     catch(err){ throw new Error('Failed to delete workshift.'); }
+    revalidatePath('/');
 }
 
 export async function updateWorkShift(id: number,formData: FormData, ) {
@@ -57,8 +67,17 @@ export async function updateWorkShift(id: number,formData: FormData, ) {
         end: formData.get('end'),
       });
 
-      const s =start.toISOString().replace('T',' ');;
-      const e =end.toISOString().replace('T',' ');;
+      if(!(dateOrderOk(start,end)))
+        throw new Error('Start timestamp must be before end timestamp.');
+
+      if(!(durationShiftOk(start,end)))
+        throw new Error('Workshift must be less than 10 hours.');
+
+      if(!atLeastQuarter(start,end))
+        throw new Error('At least 15 minutes of workshift are required.');
+
+      const s =start.toISOString();
+      const e =end.toISOString();
           
       try{
         await sql`
@@ -66,11 +85,11 @@ export async function updateWorkShift(id: number,formData: FormData, ) {
         SET start_timestamp = ${s}, end_timestamp = ${e}
         WHERE id = ${id}
       `;
-         revalidatePath('/');
-        redirect('/');
       }catch(err){
         throw new Error('Failed to update workshift.');
       }
+      revalidatePath('/');
+      redirect('/');
 }
 
 export async function insertEmployee(formData: FormData) {
@@ -84,9 +103,10 @@ export async function insertEmployee(formData: FormData) {
         INSERT INTO employee (name, surname, role)
         VALUES (${name},${surname},${role})
         `;
-        revalidatePath('/');
-        redirect('/');
+
     }catch(err){
         throw new Error('Failed to insert employee.');
     }
+    revalidatePath('/');
+    redirect('/');
 }

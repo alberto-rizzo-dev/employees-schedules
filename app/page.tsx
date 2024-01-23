@@ -17,7 +17,7 @@ export default async function Page({
     const totalPages = await fetchTablePages(query);
 
     return (    
-        <div className="p-10 flex-column justify-center items-center">
+        <div className="md:p-10 p-2 flex-column justify-center items-center">
             <div className="pb-3"><Search placeholder="Cerca turni..." /></div>
             <Suspense key={query + page} fallback={<TableSkeleton/>}>
                 <EmployeesTable query={query} currentPage={page}/>

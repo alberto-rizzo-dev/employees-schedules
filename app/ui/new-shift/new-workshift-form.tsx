@@ -16,6 +16,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
           </label>
           <div className="relative">
             <select
+              required
               id="employeeId"
               name="employeeId"
               className="pl-2 block w-full cursor-pointer rounded-xl border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 outline-2 placeholder:text-gray-500"
@@ -41,6 +42,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                required
                 id="start"
                 name="start"
                 placeholder="ex. 2023-10-31 10:00"
@@ -58,6 +60,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                required
                 id="end"
                 name="end"
                 placeholder="ex. 2023-10-31 10:00"
@@ -68,7 +71,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
           </div>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="my-6">
         <Button type="submit">Insert Workshift</Button>
       </div>
     </form>

@@ -14,6 +14,7 @@ export default function Form() {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                required
                 id="name"
                 name="name"
                 placeholder="Insert a name"
@@ -30,6 +31,7 @@ export default function Form() {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                required
                 id="surname"
                 name="surname"
                 placeholder="Insert a surname"
@@ -45,6 +47,7 @@ export default function Form() {
           </label>
           <div className="relative">
             <select
+              required
               id="role"
               name="role"
               className="pl-2 block w-full cursor-pointer rounded-xl border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 outline-2 placeholder:text-gray-500"
@@ -62,7 +65,7 @@ export default function Form() {
           </div>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="my-6">
         <Button type="submit">Insert Employee </Button>
       </div>
     </form>

@@ -18,6 +18,23 @@ export const shiftDuration = (start: Date, end: Date) => {
   return h + ":" + m;
 }
 
+export const dateOrderOk = (start: Date, end: Date) => {
+  return 0<=(end.valueOf() - start.valueOf());
+}
+
+export const durationShiftOk = (start: Date, end: Date) => {
+  let diff = end.valueOf() - start.valueOf();
+  return Math.floor(diff/1000/60/60) <=10
+}
+
+export const atLeastQuarter = (start: Date, end: Date) => {
+  //Math.abs not really needed, but just in case (start < end)
+  let diff = Math.abs(end.valueOf() - start.valueOf());
+  if((Math.floor(diff/1000/60/60))>=1) return true;
+  let mins = Math.floor((diff/1000/60) % 60);
+  return mins >= 15;
+}
+
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
     // If the total number of pages is 7 or less,
