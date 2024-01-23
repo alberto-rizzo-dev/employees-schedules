@@ -22,7 +22,24 @@ const FormSchemaEditShift = z.object({
     end: z.coerce.date(),
 });
 
+const dateSchema = z.preprocess( arg => typeof arg == 'string' ? new Date( arg ) : undefined, z.date() );
+
+
 export async function insertWorkshift(formData: FormData) {
+    try{
+        dateSchema.parse(formData.get('start')); 
+    }
+    catch(err){
+        throw new Error('Invalid start date.');
+    }
+
+    try{
+        dateSchema.parse(formData.get('end')); 
+    }
+    catch(err){
+        throw new Error('Invalid end date.');
+    }
+
     const { employeeId, start_timestamp, end_timestamp } = FormSchemaShift.parse({
         employeeId: formData.get('employeeId'),
         start_timestamp: formData.get('start'),
@@ -65,6 +82,19 @@ export async function deleteWorkShift(id: number) {
 }
 
 export async function updateWorkShift(id: number,formData: FormData, ) {
+    try{
+        dateSchema.parse(formData.get('start')); 
+    }
+    catch(err){
+        throw new Error('Invalid start date.');
+    }
+
+    try{
+        dateSchema.parse(formData.get('end')); 
+    }
+    catch(err){
+        throw new Error('Invalid end date.');
+    }
     const { start, end } = FormSchemaEditShift.parse({
         start: formData.get('start'),
         end: formData.get('end'),
