@@ -9,6 +9,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head> 
+        <meta name="keywords" content="Workshifts, work, employees, empployees management"/>
+        <meta name="description" content="Site to manage workshifts of your business"/>
+      </head>
       <body className={`${nunito.className} antialiased`}>
         <NavBar/>
         {children}
