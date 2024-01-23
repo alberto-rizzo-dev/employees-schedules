@@ -1,10 +1,9 @@
 import { Employee } from '@/app/lib/definitions';
-import Link from 'next/link';
 import {
   CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from './button';
 import { insertWorkshift } from '@/app/lib/actions';
+import { Button } from '../submit-button';
 
 export default function Form({ employees }: { employees: Employee[] }) {
   return (
@@ -19,7 +18,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
             <select
               id="employeeId"
               name="employeeId"
-              className="peer block w-full cursor-pointer rounded-xl border border-gray-200 py-2 outline-2 placeholder:text-gray-500"
+              className="pl-2 block w-full cursor-pointer rounded-xl border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 outline-2 placeholder:text-gray-500"
               defaultValue=""
             >
               <option value="" disabled>
@@ -37,7 +36,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
         {/* start turn at */}
         <div className="mb-4">
           <label htmlFor="start" className="mb-2 block">
-            Write date and time of start of shift
+            Insert date and time of start of shift
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -45,7 +44,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
                 id="start"
                 name="start"
                 placeholder="ex. 2023-10-31 10:00"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md  border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
@@ -54,7 +53,7 @@ export default function Form({ employees }: { employees: Employee[] }) {
         {/*end turn at */}
         <div className="mb-4">
           <label htmlFor="end" className="mb-2 block">
-            Write date and time of end of shift
+            Insert date and time of end of shift
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -62,19 +61,14 @@ export default function Form({ employees }: { employees: Employee[] }) {
                 id="end"
                 name="end"
                 placeholder="ex. 2023-10-31 10:00"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md  border border-orange-200 focus:border-orange-500 focus:outline-none focus:ring-0 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/"
-          className="flex h-10 items-center rounded-lg bg-orange-50 px-4 transition-colors hover:bg-orange-200">
-          Go back to Homepage
-        </Link>
+      <div className="mt-6">
         <Button type="submit">Insert Workshift</Button>
       </div>
     </form>

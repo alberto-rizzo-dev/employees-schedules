@@ -1,4 +1,5 @@
-import { fetchTableData } from "../lib/db-connection";
+import { fetchTableData } from "../../lib/db-connection";
+import { DeleteShift } from "./table_buttons";
 
 export async function EmployeesTable({
     query,
@@ -60,7 +61,7 @@ export async function EmployeesTable({
                 {"xxx"}
             </td>
             <td className="p-3">
-                {"elimina"}
+                <DeleteShift id={row.workshift_id}/>
             </td>
             </tr>
         ))}

@@ -1,8 +1,8 @@
 import { Suspense } from "react";
-import { EmployeesTable, TableSkeleton } from "./ui/table";
-import Search from "./ui/search";
+import { EmployeesTable, TableSkeleton } from "./ui/homepage/table";
+import Search from "./ui/homepage/search";
 import { fetchTablePages } from "./lib/db-connection";
-import TablePagesIndex from "./ui/table-pages-index";
+import TablePagesIndex from "./ui/homepage/table-pages-index";
 
 export default async function Page({
     searchParams,
