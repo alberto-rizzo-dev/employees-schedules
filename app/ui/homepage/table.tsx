@@ -1,5 +1,5 @@
 import { fetchTableData } from "../../lib/db-connection";
-import { DeleteShift } from "./table_buttons";
+import { DeleteShift, EditiShift } from "./table_buttons";
 
 export async function EmployeesTable({
     query,
@@ -33,7 +33,8 @@ export async function EmployeesTable({
             <th scope="col" className="p-4 font-medium hidden lg:table-cell">
                 Durata turno
             </th>
-            <th scope="col" className="p-4 font-medium"/>
+            <th scope="col" className="p-4"/>
+            <th scope="col" className="p-4"/>
         </tr>
         </thead>
         <tbody className="bg-white ">
@@ -62,6 +63,9 @@ export async function EmployeesTable({
             </td>
             <td className="p-3">
                 <DeleteShift id={row.workshift_id}/>
+            </td>
+            <td className="pr-5">
+                <EditiShift id={row.workshift_id}/>
             </td>
             </tr>
         ))}

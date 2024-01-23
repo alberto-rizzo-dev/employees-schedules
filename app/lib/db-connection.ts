@@ -3,6 +3,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 
 import {
   Employee,
+    WorkShift,
     WorkShiftTable
 } from './definitions';
 
@@ -72,6 +73,37 @@ export async function fetchEmployees(){
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all employees.');
+  }
+}
+
+export async function fetchShiftById(id: string){
+  noStore();
+  try {
+    const data = await sql<WorkShift>`
+      SELECT *
+      FROM workshift
+      WHERE id = ${id}
+    `;
+    return data.rows[0];
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch workshift.');
+  }
+}
+
+export async function fetchEmployeeByShiftId
+(id: string){
+  noStore();
+  try {
+    const data = await sql<Employee>`
+      SELECT employee.id,employee.name, employee.surname, employee.role
+      FROM employee,workshift
+      WHERE workshift.id = ${id}
+    `;
+    return data.rows[0];
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch employee.');
   }
 }
 
