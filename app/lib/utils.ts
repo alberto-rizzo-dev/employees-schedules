@@ -1,3 +1,24 @@
+export const dateToString = (date: Date) => {
+  const hours = date.getHours() <10 ? "0"+date.getHours() : date.getHours();
+  const min = date.getMinutes() <10 ? "0"+date.getMinutes() : date.getMinutes();
+
+  return date.toDateString() + " " + hours + ":" + min;
+}
+
+export const shiftDuration = (start: Date, end: Date) => {
+  //Math.abs not really needed, but just in case (start < end)
+  let diff = Math.abs(end.valueOf() - start.valueOf());
+
+  let hours = Math.floor(diff/1000/60/60);
+  let mins = Math.floor((diff/1000/60) % 60);
+
+  let m = mins < 10 ? "0"+mins : mins;
+  let h = hours < 10 ? "0"+hours : mins;
+
+  return h + ":" + m;
+}
+
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
     // If the total number of pages is 7 or less,
     // display all pages without any ellipsis.

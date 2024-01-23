@@ -1,3 +1,4 @@
+import { dateToString, shiftDuration } from "@/app/lib/utils";
 import { fetchTableData } from "../../lib/db-connection";
 import { DeleteShift, EditiShift } from "./table_buttons";
 
@@ -53,13 +54,13 @@ export async function EmployeesTable({
                 {row.role}
             </td>
             <td className="p-3">
-                {row.start_timestamp.toDateString()}
+                {dateToString(row.start_timestamp)}
             </td>
             <td className="p-3 hidden lg:table-cell">
-                {row.end_timestamp.toDateString()}
+                {dateToString(row.end_timestamp)}
             </td>
             <td className="p-3 hidden lg:table-cell">
-                {"xxx"}
+                {shiftDuration(row.start_timestamp,row.end_timestamp)}
             </td>
             <td className="p-3">
                 <DeleteShift id={row.workshift_id}/>

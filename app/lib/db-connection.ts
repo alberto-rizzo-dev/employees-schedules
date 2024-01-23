@@ -99,6 +99,7 @@ export async function fetchEmployeeByShiftId
       SELECT employee.id,employee.name, employee.surname, employee.role
       FROM employee,workshift
       WHERE workshift.id = ${id}
+      AND employee.id=workshift.employee
     `;
     return data.rows[0];
   } catch (err) {

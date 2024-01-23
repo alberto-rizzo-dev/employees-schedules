@@ -28,20 +28,27 @@ export async function insertWorkshift(formData: FormData) {
       start_timestamp: formData.get('start'),
       end_timestamp: formData.get('end'),
     });
-    const start =start_timestamp.toISOString();
-    const end =end_timestamp.toISOString();
+    const start =start_timestamp.toISOString().replace('T',' ');
+    const end =end_timestamp.toISOString().replace('T',' ');
 
-    await sql`
-    INSERT INTO workshift (employee, start_timestamp, end_timestamp)
-    VALUES (${employeeId},${start},${end})
-    `;
-    revalidatePath('/');
-    redirect('/');
+    try{
+        await sql`
+        INSERT INTO workshift (employee, start_timestamp, end_timestamp)
+        VALUES (${employeeId},${start},${end})
+        `;
+        revalidatePath('/');
+        redirect('/');
+    }catch(err){
+        throw new Error('Failed to insert workshift.');
+    }
 }
 
 export async function deleteWorkShift(id: number) {
-    await sql`DELETE FROM workshift WHERE id = ${id}`;
-    revalidatePath('/');
+    try{ 
+        await sql`DELETE FROM workshift WHERE id = ${id}`;     
+        revalidatePath('/');
+    }
+    catch(err){ throw new Error('Failed to delete workshift.'); }
 }
 
 export async function updateWorkShift(id: number,formData: FormData, ) {
@@ -50,17 +57,20 @@ export async function updateWorkShift(id: number,formData: FormData, ) {
         end: formData.get('end'),
       });
 
-      const s =start.toISOString();
-      const e =end.toISOString();
+      const s =start.toISOString().replace('T',' ');;
+      const e =end.toISOString().replace('T',' ');;
           
-      await sql`
+      try{
+        await sql`
         UPDATE workshift
         SET start_timestamp = ${s}, end_timestamp = ${e}
         WHERE id = ${id}
       `;
-     
-      revalidatePath('/');
-      redirect('/');
+         revalidatePath('/');
+        redirect('/');
+      }catch(err){
+        throw new Error('Failed to update workshift.');
+      }
 }
 
 export async function insertEmployee(formData: FormData) {
@@ -69,10 +79,14 @@ export async function insertEmployee(formData: FormData) {
       surname: formData.get('surname'),
       role: formData.get('role'),
     });
-    await sql`
-    INSERT INTO employee (name, surname, role)
-    VALUES (${name},${surname},${role})
-    `;
-    revalidatePath('/');
-    redirect('/');
+    try{
+        await sql`
+        INSERT INTO employee (name, surname, role)
+        VALUES (${name},${surname},${role})
+        `;
+        revalidatePath('/');
+        redirect('/');
+    }catch(err){
+        throw new Error('Failed to insert employee.');
+    }
 }
