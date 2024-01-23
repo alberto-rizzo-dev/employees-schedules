@@ -23,16 +23,6 @@ const FormSchemaEditShift = z.object({
 });
 
 export async function insertWorkshift(formData: FormData) {
-    try{
-        z.string().datetime().parse(formData.get('start'));
-    }catch(err){
-        throw new Error('Start timestamp is not valid.');
-    }
-    try{
-        z.string().datetime().parse(formData.get('end'));
-    }catch(err){
-        throw new Error('end timestamp is not valid.');
-    }
     const { employeeId, start_timestamp, end_timestamp } = FormSchemaShift.parse({
         employeeId: formData.get('employeeId'),
         start_timestamp: formData.get('start'),
@@ -75,19 +65,6 @@ export async function deleteWorkShift(id: number) {
 }
 
 export async function updateWorkShift(id: number,formData: FormData, ) {
-
-    try{
-        const valid_date = z.string().datetime().parse(formData.get('start'));
-    }catch(err){
-        throw new Error('Start timestamp is not valid.');
-    }
-    try{
-        const valid_date = z.string().datetime().parse(formData.get('end'));
-
-    }catch(err){
-        throw new Error('end timestamp is not valid.');
-    }
-
     const { start, end } = FormSchemaEditShift.parse({
         start: formData.get('start'),
         end: formData.get('end'),
