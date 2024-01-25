@@ -57,11 +57,9 @@ export async function insertWorkshift(formData: FormData) {
 
     if(!atLeastQuarter(start_timestamp,end_timestamp))
         throw new Error('At least 15 minutes of workshift are required.');
-
-    if(!(await dateInOtherShifts(employeeId,start_timestamp,-1))
-       || !(await dateInOtherShifts(employeeId,end_timestamp,-1))){
+    if( await dateInOtherShifts(employeeId,start_timestamp,-1) || await dateInOtherShifts(employeeId,start_timestamp,-1)){
         throw new Error('Employee already has a shift in this time interval.');
-    }
+    } //-1 is used to check all the shifts
 
     const start =dateToString(start_timestamp);
     const end =dateToString(end_timestamp);
@@ -86,7 +84,7 @@ export async function deleteWorkShift(id: number) {
     revalidatePath('/');
 }
 
-export async function updateWorkShift(id: number,formData: FormData, ) {
+export async function updateWorkShift(id: number, employee_id: number,formData: FormData, ) {
     try{
         dateSchema.parse(formData.get('start')); 
     }
@@ -116,6 +114,10 @@ export async function updateWorkShift(id: number,formData: FormData, ) {
 
       if(!atLeastQuarter(start,end))
         throw new Error('At least 15 minutes of workshift are required.');
+
+      if(await dateInOtherShifts(employee_id,start,id) || await dateInOtherShifts(employee_id,end,id)){
+         throw new Error('Employee already has a shift in this time interval.');
+      } //id is used to check all the shifts except the one being updated
 
       const s =dateToString(start);
       const e =dateToString(end);

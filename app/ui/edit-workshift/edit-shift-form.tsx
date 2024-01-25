@@ -11,14 +11,14 @@ export default function Form({
     employee,
   }: {
     shift: WorkShift;
-    employee: string;
+    employee: Employee;
   }) 
  {
-  const editWorkShift = updateWorkShift.bind(null,shift.id);
+  const editWorkShift = updateWorkShift.bind(null,shift.id,employee.id);
   return (
     <form action={editWorkShift} className='flex flex-col justify-center items-center'>
       <div className="md:rounded-md md:bg-orange-50 md:shadow-md md:w-[90%] p-6 shadow-none w-full rounded-none">
-        <p className="text-center text-2xl font-bold mb-4">Edit Workshift of {employee}</p>
+        <p className="text-center text-2xl font-bold mb-4">Edit Workshift of {employee.name+ " "+ employee.surname}</p>
         {/* start turn at */}
         <div className="mb-4">
           <label htmlFor="start" className="mb-2 block">

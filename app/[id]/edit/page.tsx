@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   if(!shift) return notFound();
   return (
     <main>
-      <Form shift={shift} employee={employee.name + " "+employee.surname}/>
+      <Form shift={shift} employee={employee}/>
     </main>
   );
 }

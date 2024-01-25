@@ -1,0 +1,6 @@
+{
+  "/[id]/edit/page": "app/[id]/edit/page.js",
+  "/page": "app/page.js",
+  "/insert-workshift/page": "app/insert-workshift/page.js",
+  "/add-employee/page": "app/add-employee/page.js"
+}

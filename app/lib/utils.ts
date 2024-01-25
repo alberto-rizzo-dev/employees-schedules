@@ -75,12 +75,13 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     ];
   };
 
-  export async function dateInOtherShifts(employee_id: string, date: Date , shift_id: string) {
+  export async function dateInOtherShifts(employee_id: number, date: Date , shift_id: number) {
+    var ret = false;
     const shifts = await fetchShiftsByEmployee(employee_id,shift_id);
     shifts.forEach((shift) => {
-      if (date > shift.start_timestamp && date < shift.end_timestamp) {
-        return true;
+      if (date >= shift.start_timestamp && date <= shift.end_timestamp) {
+        ret = true;
       }
     });
-    return false;
+    return ret;
   }
