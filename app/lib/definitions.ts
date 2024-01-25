@@ -2,7 +2,7 @@ export type Employee = {
     id: number;
     name: string;
     surname: string;
-    role: 'impiegato' | 'operaio' | 'capo reparto' | 'dirigente' | 'amministratore';
+    role: 'worker' |'manager' | 'office worker' | 'manager';
   };
   
   export type WorkShift = {
@@ -16,7 +16,7 @@ export type Employee = {
     employee_id: number;
     name: string;
     surname: string;
-    role: 'impiegato' | 'operaio' | 'capo reparto' | 'dirigente' | 'amministratore';
+    role: 'worker' |'manager' | 'office worker' | 'manager';
     workshift_id: number;
     start_timestamp: Date;
     end_timestamp: Date;

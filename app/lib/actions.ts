@@ -3,7 +3,7 @@ import { z } from 'zod'; //for type validation
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache'; //for revalidate table data
 import { redirect } from 'next/navigation';
-import { atLeastQuarter, dateOrderOk, dateToString, durationShiftOk, isFutureDate } from './utils';
+import { atLeastQuarter, dateInOtherShifts, dateOrderOk, dateToString, durationShiftOk, isFutureDate } from './utils';
 
 const FormSchemaShift = z.object({
     employeeId: z.coerce.number(),
@@ -57,6 +57,11 @@ export async function insertWorkshift(formData: FormData) {
 
     if(!atLeastQuarter(start_timestamp,end_timestamp))
         throw new Error('At least 15 minutes of workshift are required.');
+
+    if(!(await dateInOtherShifts(employeeId,start_timestamp,-1))
+       || !(await dateInOtherShifts(employeeId,end_timestamp,-1))){
+        throw new Error('Employee already has a shift in this time interval.');
+    }
 
     const start =dateToString(start_timestamp);
     const end =dateToString(end_timestamp);

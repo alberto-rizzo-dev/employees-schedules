@@ -1,3 +1,5 @@
+import { fetchShiftsByEmployee } from "./db-connection";
+
 export const dateToString = (date: Date) => {
   
   const hours = date.getHours() <10 ? "0"+date.getHours() : date.getHours();
@@ -72,3 +74,13 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
       totalPages,
     ];
   };
+
+  export async function dateInOtherShifts(employee_id: string, date: Date , shift_id: string) {
+    const shifts = await fetchShiftsByEmployee(employee_id,shift_id);
+    shifts.forEach((shift) => {
+      if (date > shift.start_timestamp && date < shift.end_timestamp) {
+        return true;
+      }
+    });
+    return false;
+  }

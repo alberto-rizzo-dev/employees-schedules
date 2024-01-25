@@ -11,6 +11,7 @@ export async function EmployeesTable({
   }) 
 {
     const rows = await fetchTableData(query,currentPage);
+    
     return (
     <div className="display flex justify-center items-center">
         <table className="min-w-full text-gray-900 table bg-orange-300 rounded-lg shadow-md">

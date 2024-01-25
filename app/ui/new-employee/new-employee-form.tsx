@@ -2,7 +2,7 @@ import { insertEmployee } from '@/app/lib/actions';
 import { Button } from '../submit-button';
 
 export default function Form() {
-  const roles: string[] = ['impiegato' , 'operaio' , 'capo reparto' , 'dirigente' , 'amministratore'];
+  const roles: string[] = ['worker','manager' , 'office worker' , 'manager'];
   return (
     <form action={insertEmployee} className='flex flex-col justify-center items-center'>
       <div className="md:rounded-md md:bg-orange-50 md:shadow-md md:w-[90%] p-6 shadow-none w-full rounded-none">
@@ -43,7 +43,7 @@ export default function Form() {
         {/* Select role */}
         <div className="mb-4">
           <label htmlFor="employee" className="mb-2 block">
-            Select an employee
+            Select a role
           </label>
           <div className="relative">
             <select

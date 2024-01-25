@@ -1,3 +1,5 @@
+'use server';
+
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -85,6 +87,23 @@ export async function fetchShiftById(id: string){
       WHERE id = ${id}
     `;
     return data.rows[0];
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch workshift.');
+  }
+}
+
+export async function fetchShiftsByEmployee(employee: number,except_shift_id:number){
+  //except_shift_id is used to avoid checking the shift that is being edited
+  noStore();
+  try {
+    const data = await sql<WorkShift>`
+      SELECT *
+      FROM workshift
+      WHERE employee = ${employee}
+      AND id != ${except_shift_id}
+    `;
+    return data.rows;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch workshift.');
